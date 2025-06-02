@@ -71,7 +71,6 @@ export const useModalStore = defineStore('modal', () => {
 		const modal = getModalById(id)
 		if (modal) {
 			modals.value.splice(modal.idx, 1)
-			console.log('Closed modal in store:', id)
 		}
 		if (getModalsLength.value === 0) {
 			document.body.style.overflow = ''
@@ -105,7 +104,6 @@ export const useModalStore = defineStore('modal', () => {
 		modalIds.forEach(id => {
 			rejectModal(id, new Error('All modals closed'))
 		})
-		console.log('Closed all modals via store')
 	}
 
 	return {
@@ -118,6 +116,6 @@ export const useModalStore = defineStore('modal', () => {
 		closeAll,
 		settings,
 		getLastModal,
-		getModalsLength
+		getModalsLength,
 	}
 })
