@@ -85,9 +85,4 @@
 			}
 		}
 	}
-
-	onMounted(() => {
-		askForConfirmation()
-		askForAccept()
-	})
 </script>

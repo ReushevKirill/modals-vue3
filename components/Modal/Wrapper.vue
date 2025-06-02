@@ -20,77 +20,19 @@
 </template>
 
 <script setup lang="ts">
-	import type { PropType } from 'vue'
-	import { useModalStore, type ModalState } from '~/stores/modalStore'
+	import type { ModalState } from '~/stores/modalStore'
 
-	const props = defineProps({
-		modal: {
-			type: Object as PropType<ModalState>,
-			required: true,
-		},
-		zIndex: {
-			type: Number,
-			required: true,
-		},
-	})
+	const props = defineProps<{
+		modal: ModalState
+		zIndex: number
+	}>()
 
-	const modalStore = useModalStore()
-
-	const handleResolve = (data: unknown) => {
-		modalStore.resolveModal(props.modal.id, data)
-	}
-
-	const handleReject = (reason?: unknown) => {
-		modalStore.rejectModal(
-			props.modal.id,
-			reason || new Error('Modal action rejected by component')
-		)
-	}
-
-	const handleProgrammaticClose = () => {
-		modalStore.rejectModal(
-			props.modal.id,
-			new Error('Modal closed by component event')
-		)
-	}
-
-	const handleEsc = (event: KeyboardEvent) => {
-		if (props.modal.options?.closeOnEsc && event.key === 'Escape') {
-			const lastModal = modalStore.getLastModal
-			if (lastModal && lastModal.id === props.modal.id) {
-				console.log(`ESC pressed for modal ${String(props.modal.id)}`)
-				modalStore.rejectModal(
-					props.modal.id,
-					new Error('Modal closed by Escape key')
-				)
-			}
-		}
-	}
-
-	const onClickOutside = () => {
-		if (props.modal.options?.closeOnClickOutside) {
-			const lastModal = modalStore.getLastModal
-			if (lastModal && lastModal.id === props.modal.id) {
-				console.log(`Clicked outside modal ${String(props.modal.id)}`)
-				modalStore.rejectModal(
-					props.modal.id,
-					new Error('Modal closed by click outside')
-				)
-			}
-		}
-	}
-
-	onMounted(() => {
-		if (props.modal.options?.closeOnEsc) {
-			window.addEventListener('keydown', handleEsc)
-		}
-	})
-
-	onUnmounted(() => {
-		if (props.modal.options?.closeOnEsc) {
-			window.removeEventListener('keydown', handleEsc)
-		}
-	})
+	const {
+		handleProgrammaticClose,
+		handleReject,
+		handleResolve,
+		onClickOutside,
+	} = useModalWrapper(props)
 </script>
 
 <style scoped>
