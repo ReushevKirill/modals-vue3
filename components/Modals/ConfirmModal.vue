@@ -24,21 +24,18 @@
 		},
 	})
 
-	const emit = defineEmits(['resolve', 'reject'])
-
 	const computedTitle = computed(() => props.title || 'Подтверждение')
 
+	const emit = defineEmits(['resolve', 'reject'])
 	const handleConfirm = () => {
 		emit('resolve', true)
 	}
-
 	const handleCancel = () => {
-		emit('reject', new Error('User cancelled confirmation'))
+		emit('reject', false)
 	}
 </script>
 
 <style scoped>
-	/* Стили для конкретных кнопок или элементов ConfirmModal, если нужно */
 	.btn-primary {
 		background-color: dodgerblue;
 		color: white;

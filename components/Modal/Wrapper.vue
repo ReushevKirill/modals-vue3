@@ -1,24 +1,22 @@
 <template>
-	<Teleport to="body">
-		<div
-			class="modal-wrapper"
-			:style="{ zIndex }"
-			role="dialog"
-			aria-modal="true"
-			@mousedown="onClickOutside"
-		>
-			<div ref="modalContentRef" class="modal-container" @mousedown.stop>
-				<component
-					:is="modal.component"
-					v-bind="modal.props"
-					:modal-id="modal.id"
-					@resolve="handleResolve"
-					@reject="handleReject"
-					@close="handleProgrammaticClose"
-				/>
-			</div>
+	<div
+		class="modal-wrapper"
+		:style="{ zIndex }"
+		role="dialog"
+		aria-modal="true"
+		@mousedown="onClickOutside"
+	>
+		<div ref="modalContentRef" class="modal-container" @mousedown.stop>
+			<component
+				:is="modal.component"
+				v-bind="modal.props"
+				:modal-id="modal.id"
+				@resolve="handleResolve"
+				@reject="handleReject"
+				@close="handleProgrammaticClose"
+			/>
 		</div>
-	</Teleport>
+	</div>
 </template>
 
 <script setup lang="ts">

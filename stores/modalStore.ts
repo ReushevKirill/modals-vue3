@@ -1,4 +1,3 @@
-// stores/modalStore.ts
 import { defineStore } from 'pinia'
 import { shallowRef, type Component } from 'vue'
 
